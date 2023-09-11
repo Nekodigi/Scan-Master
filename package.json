@@ -6,6 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
+    "export": "next build && next export",
     "lint": "next lint"
   },
   "dependencies": {
@@ -26,6 +27,7 @@
     "react-barcode-qrcode-scanner": "^0.1.1",
     "react-barcode-reader": "^0.0.2",
     "react-dom": "18.2.0",
+    "react-qr-code": "^2.0.12",
     "react-qr-reader": "^3.0.0-beta-1",
     "react-zxing": "^2.0.0",
     "typescript": "5.2.2"
