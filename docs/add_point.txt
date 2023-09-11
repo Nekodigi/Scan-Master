@@ -1,6 +1,6 @@
 1:HL["/_next/static/media/2aaf0723e720e8b9-s.p.woff2",{"as":"font","type":"font/woff2"}]
 2:HL["/_next/static/css/a782078d3568b102.css",{"as":"style"}]
-0:["rUbRzQXM8TVpZwTxjrxQw",[[["",{"children":["add_point",{"children":["__PAGE__",{}]}]},"$undefined","$undefined",true],"$L3",[[["$","link","0",{"rel":"stylesheet","href":"/_next/static/css/a782078d3568b102.css","precedence":"next"}]],"$L4"]]]]
+0:["IRgqG4XxUjSB7JUhwuG9m",[[["",{"children":["add_point",{"children":["__PAGE__",{}]}]},"$undefined","$undefined",true],"$L3",[[["$","link","0",{"rel":"stylesheet","href":"/_next/static/css/a782078d3568b102.css","precedence":"next"}]],"$L4"]]]]
 5:I{"id":49231,"chunks":["185:static/chunks/app/layout-4cc0ef03402da7e9.js"],"name":"StoreVitalProvider","async":false}
 6:I{"id":47767,"chunks":["272:static/chunks/webpack-8f4cc223d37bd2aa.js","971:static/chunks/fd9d1056-8def09e5124de850.js","596:static/chunks/596-7ae34add18829ccd.js"],"name":"default","async":false}
 7:I{"id":57920,"chunks":["272:static/chunks/webpack-8f4cc223d37bd2aa.js","971:static/chunks/fd9d1056-8def09e5124de850.js","596:static/chunks/596-7ae34add18829ccd.js"],"name":"default","async":false}

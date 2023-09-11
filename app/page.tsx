@@ -176,6 +176,10 @@ export default function Home() {
       .then((text) => {
         console.log(text);
       });
+    setOrder({
+      id: undefined,
+      items: [],
+    });
   };
 
   return (
