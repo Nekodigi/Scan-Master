@@ -19,6 +19,7 @@ import {
   grayColor,
   primaryColor,
 } from "@/style/color";
+import { HeaderApp } from "@/components/organisms/headerApp";
 
 export default function Notify() {
   const searchParams = useSearchParams();
@@ -28,26 +29,9 @@ export default function Notify() {
 
   return (
     <Box>
-      <AppBar position="static" sx={{ background: accentColor }} elevation={0}>
-        <Container maxWidth="xs" sx={{ px: 4 }}>
-          <Stack
-            direction="row"
-            justifyContent="space-between"
-            alignItems="center"
-            py={2}
-          >
-            <Typography sx={{ fontSize: 24, fontWeight: 700 }}>
-              Sコーヒー
-            </Typography>
-          </Stack>
-        </Container>
-      </AppBar>
+      <HeaderApp selected="/notification" />
+
       <Container maxWidth="xs">
-        <Box p={2} borderBottom={1} borderColor={borderColor}>
-          <Typography sx={{ fontSize: 24, fontWeight: 700 }}>
-            お知らせ
-          </Typography>
-        </Box>
         <Stack mt={0}>
           <Stack direction={"row"} m={3} gap={1.5}>
             <img

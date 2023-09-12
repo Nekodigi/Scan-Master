@@ -5,6 +5,7 @@ import {
   Box,
   Button,
   Container,
+  Grid,
   MenuItem,
   Select,
   Stack,
@@ -16,76 +17,122 @@ import { StoreVitalContext } from "@/components/contexts/storeVital";
 import {
   accentColor,
   borderColor,
+  darkGrayColor,
   grayColor,
   primaryColor,
 } from "@/style/color";
+import { HeaderApp } from "@/components/organisms/headerApp";
 
 export default function Notify() {
   const searchParams = useSearchParams();
   const title = searchParams.get("title");
   const { products, users } = useContext(StoreVitalContext);
   const [userId, setUserId] = useState<number>(0);
+  const [orderItems, setOrderItems] = useState<OrderItem[]>([]);
+
+  const user_id = 1;
+
+  useEffect(() => {
+    const fetchData = async () => {
+      let options = {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          "ngrok-skip-browser-warning": "true",
+        },
+      };
+      fetch(`${process.env.NEXT_PUBLIC_API_URL}/recommends/${user_id}`, options)
+        .then((res) => {
+          return res.json();
+        })
+        .then((json) => {
+          // console.log(json as OrderItem[]);
+          setOrderItems(json as OrderItem[]);
+        });
+    };
+    fetchData();
+  }, []);
 
   return (
     <Box>
-      <AppBar position="static" sx={{ background: accentColor }} elevation={0}>
-        <Container maxWidth="xs" sx={{ px: 4 }}>
-          <Stack
-            direction="row"
-            justifyContent="space-between"
-            alignItems="center"
-            py={2}
-          >
-            <Typography sx={{ fontSize: 24, fontWeight: 700 }}>
-              Sコーヒー
-            </Typography>
-          </Stack>
-        </Container>
-      </AppBar>
+      <HeaderApp selected="/recommend" />
+
       <Container maxWidth="xs">
-        <Box p={2} borderBottom={1} borderColor={borderColor}>
-          <Typography sx={{ fontSize: 24, fontWeight: 700 }}>
-            今週のおすすめ
-          </Typography>
-        </Box>
-        <Stack mt={0}>
-          <Stack direction={"row"} m={3} gap={1.5}>
+        <Grid container direction="row" m={2} spacing={2}>
+          {orderItems.map((orderItem) => (
+            <Grid item xs={6} key={orderItem.id}>
+              <Stack
+                sx={{
+                  borderBottom: 1,
+                  borderColor: borderColor,
+                  borderRadius: 1,
+                  overflow: "hidden",
+                }}
+              >
+                <img
+                  width={"100%"}
+                  style={{ objectFit: "cover", aspectRatio: 1 }}
+                  src="https://post.medicalnewstoday.com/wp-content/uploads/sites/3/2020/02/323594_2200-1200x628.jpg"
+                />
+
+                <Stack alignItems={"center"} width={"100%"} p={1}>
+                  <Typography sx={{ fontSize: 14, fontWeight: 700 }}>
+                    {products[orderItem.id].name}
+                  </Typography>
+                  <Typography sx={{ fontSize: 14, color: darkGrayColor }}>
+                    ￥ {products[orderItem.id].price}
+                  </Typography>
+                </Stack>
+              </Stack>
+            </Grid>
+          ))}
+          <Stack
+            sx={{
+              borderBottom: 1,
+              borderColor: borderColor,
+              borderRadius: 1,
+              overflow: "hidden",
+            }}
+          >
             <img
-              width={128}
-              height={128}
-              style={{ objectFit: "cover" }}
+              width={"100%"}
+              style={{ objectFit: "cover", aspectRatio: 1 }}
               src="https://post.medicalnewstoday.com/wp-content/uploads/sites/3/2020/02/323594_2200-1200x628.jpg"
             />
-            <Stack justifyContent={"space-between"} width={"100%"}>
-              <Typography sx={{ fontSize: 18, fontWeight: 700 }}>
+
+            <Stack alignItems={"center"} width={"100%"} p={1}>
+              <Typography sx={{ fontSize: 14, fontWeight: 700 }}>
                 マグカップ店舗のみ
               </Typography>
-              <Stack>
-                <Stack direction={"row"} justifyContent={"space-between"}>
-                  <Typography sx={{ fontSize: 16, color: grayColor }}>
-                    2023/8/2
-                  </Typography>
-                  <Typography sx={{ fontSize: 16 }}>￥200</Typography>
-                </Stack>
-                <Typography sx={{ fontSize: 16 }}>1個</Typography>
-                <Button
-                  variant="contained"
-                  sx={{
-                    color: "white",
-                    fontWeight: 700,
-                    fontSize: 16,
-                    mt: 1,
-                    p: 0,
-                    width: 80,
-                    alignSelf: "flex-end",
-                  }}
-                >
-                  購入
-                </Button>
-              </Stack>
+              <Typography sx={{ fontSize: 14, color: darkGrayColor }}>
+                ￥ 200
+              </Typography>
             </Stack>
           </Stack>
-        </Stack>
+          <Stack
+            sx={{
+              borderBottom: 1,
+              borderColor: borderColor,
+              borderRadius: 1,
+              overflow: "hidden",
+            }}
+          >
+            <img
+              width={"100%"}
+              style={{ objectFit: "cover", aspectRatio: 1 }}
+              src="https://post.medicalnewstoday.com/wp-content/uploads/sites/3/2020/02/323594_2200-1200x628.jpg"
+            />
+
+            <Stack alignItems={"center"} width={"100%"} p={1}>
+              <Typography sx={{ fontSize: 14, fontWeight: 700 }}>
+                マグカップ店舗のみ
+              </Typography>
+              <Typography sx={{ fontSize: 14, color: darkGrayColor }}>
+                ￥ 200
+              </Typography>
+            </Stack>
+          </Stack>
+        </Grid>
       </Container>
     </Box>
   );

@@ -2,12 +2,26 @@ type Product = {
   id: number;
   name: string;
   price: number;
+  created_at: string;
+  updated_at: string;
+};
+
+type OrderItem = {
+  id: number;
+  order_id: number;
+  name: string;
   quantity: number;
+  created_at: string;
+  updated_at: string;
 };
 
 type Order = {
   id: number | undefined;
   total_points: number;
   user_id: number | undefined;
-  items: Product[];
+  order_items: OrderItem[];
+};
+
+type HistoryRes = {
+  orders: Order[];
 };

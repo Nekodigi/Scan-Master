@@ -27,7 +27,7 @@ export default function Home() {
     id: undefined,
     total_points: 0,
     user_id: undefined,
-    items: [],
+    order_items: [],
   });
   //from context
   const { products, users } = useContext(StoreVitalContext);
@@ -127,25 +127,41 @@ export default function Home() {
 
   const addItem = (id: number) => {
     const item = products.find((item) => item.id === id);
-    item!.quantity = 1;
+
     if (item) {
       const newOrder = { ...order };
-      const index = newOrder.items.findIndex((item) => item.id === id);
+      const index = newOrder.order_items.findIndex((item) => item.id === id);
       if (index >= 0) {
-        let p = newOrder.items[index]!;
+        let p = newOrder.order_items[index]!;
         p.quantity += 1;
       } else {
-        newOrder.items.push({ ...item });
+        let orderItem = {} as OrderItem;
+        orderItem.id = item.id;
+        orderItem.quantity = 1;
+        newOrder.order_items.push({ ...orderItem });
       }
       setOrder(newOrder);
     }
+
+    // item!.quantity = 1;
+    // if (item) {
+    //   const newOrder = { ...order };
+    //   const index = newOrder.order_items.findIndex((item) => item.id === id);
+    //   if (index >= 0) {
+    //     let p = newOrder.order_items[index]!;
+    //     p.quantity += 1;
+    //   } else {
+    //     newOrder.order_items.push({ ...item });
+    //   }
+    //   setOrder(newOrder);
+    // }
   };
 
-  const sum_price = order.items.reduce(
-    (sum, item) => sum + item.quantity * item.price,
+  const sum_price = order.order_items.reduce(
+    (sum, item) => sum + item.quantity * products[item.id].price,
     0
   );
-  const sum_quantity = order.items.reduce(
+  const sum_quantity = order.order_items.reduce(
     (sum, item) => sum + item.quantity,
     0
   );
@@ -156,7 +172,7 @@ export default function Home() {
       store_id: store_id,
       user_id: user?.id,
       total_points: sum_point,
-      order_items: order.items.map((item) => {
+      order_items: order.order_items.map((item) => {
         return {
           product_id: item.id,
           quantity: item.quantity,
@@ -181,7 +197,7 @@ export default function Home() {
       id: undefined,
       total_points: 0,
       user_id: undefined,
-      items: [],
+      order_items: [],
     });
     setUser(undefined);
   };
@@ -216,7 +232,7 @@ export default function Home() {
           direction={"column"}
         >
           <Stack px={2} height={"100%"}>
-            {order.items.map((item) => (
+            {order.order_items.map((item) => (
               <OrderItem key={item.id} item={item} />
             ))}
           </Stack>
