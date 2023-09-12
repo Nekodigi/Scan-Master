@@ -46,7 +46,8 @@ export default function Notify() {
           return res.json();
         })
         .then((json) => {
-          // console.log(json as OrderItem[]);
+          console.log(json as OrderItem[]);
+          console.log(products);
           setOrderItems(json as OrderItem[]);
         });
     };
@@ -58,7 +59,7 @@ export default function Notify() {
       <HeaderApp selected="/recommend" />
 
       <Container maxWidth="xs">
-        <Grid container direction="row" m={2} spacing={2}>
+        <Grid container direction="row" mt={1} spacing={2}>
           {orderItems.map((orderItem) => (
             <Grid item xs={6} key={orderItem.id}>
               <Stack
@@ -86,52 +87,6 @@ export default function Notify() {
               </Stack>
             </Grid>
           ))}
-          <Stack
-            sx={{
-              borderBottom: 1,
-              borderColor: borderColor,
-              borderRadius: 1,
-              overflow: "hidden",
-            }}
-          >
-            <img
-              width={"100%"}
-              style={{ objectFit: "cover", aspectRatio: 1 }}
-              src="https://post.medicalnewstoday.com/wp-content/uploads/sites/3/2020/02/323594_2200-1200x628.jpg"
-            />
-
-            <Stack alignItems={"center"} width={"100%"} p={1}>
-              <Typography sx={{ fontSize: 14, fontWeight: 700 }}>
-                マグカップ店舗のみ
-              </Typography>
-              <Typography sx={{ fontSize: 14, color: darkGrayColor }}>
-                ￥ 200
-              </Typography>
-            </Stack>
-          </Stack>
-          <Stack
-            sx={{
-              borderBottom: 1,
-              borderColor: borderColor,
-              borderRadius: 1,
-              overflow: "hidden",
-            }}
-          >
-            <img
-              width={"100%"}
-              style={{ objectFit: "cover", aspectRatio: 1 }}
-              src="https://post.medicalnewstoday.com/wp-content/uploads/sites/3/2020/02/323594_2200-1200x628.jpg"
-            />
-
-            <Stack alignItems={"center"} width={"100%"} p={1}>
-              <Typography sx={{ fontSize: 14, fontWeight: 700 }}>
-                マグカップ店舗のみ
-              </Typography>
-              <Typography sx={{ fontSize: 14, color: darkGrayColor }}>
-                ￥ 200
-              </Typography>
-            </Stack>
-          </Stack>
         </Grid>
       </Container>
     </Box>

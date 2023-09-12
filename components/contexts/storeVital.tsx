@@ -131,7 +131,7 @@ export const StoreVitalProvider = ({
     <StoreVitalContext.Provider
       value={{ products, setProducts, users, setUsers }}
     >
-      {children}
+      {products.length > 0 ? children : <p>Loading... </p>}
     </StoreVitalContext.Provider>
   );
 };

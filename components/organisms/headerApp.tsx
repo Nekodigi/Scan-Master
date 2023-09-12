@@ -5,6 +5,7 @@ import {
   grayColor,
 } from "@/style/color";
 import { AppBar, Box, Button, Stack, Toolbar, Typography } from "@mui/material";
+import Link from "next/link";
 
 export function HeaderApp({
   selected,
@@ -62,6 +63,7 @@ export function HeaderApp({
                   borderBottom: selected == tab.url ? 2 : 0,
                   borderColor: accentColor,
                 }}
+                component={Link}
                 href={tab.url}
               >
                 {tab.name}

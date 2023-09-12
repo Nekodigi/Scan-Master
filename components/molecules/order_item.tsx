@@ -17,7 +17,7 @@ export function OrderItem({ item }: OrderItemProps) {
       justifyContent={"space-between"}
     >
       <Stack direction={"row"}>
-        <Typography width={160}>{item.name}</Typography>
+        <Typography width={160}>{products[item.id].name}</Typography>
         <Typography sx={{ fontWeight: 700 }}>x{item.quantity}</Typography>
       </Stack>
       <Typography sx={{ fontWeight: 700 }}>
