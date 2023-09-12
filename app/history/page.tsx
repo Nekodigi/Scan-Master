@@ -24,7 +24,7 @@ import { HeaderApp } from "@/components/organisms/headerApp";
 export default function History() {
   const searchParams = useSearchParams();
   const title = searchParams.get("title");
-  const { products, users } = useContext(StoreVitalContext);
+  const { products, getProduct, users } = useContext(StoreVitalContext);
   const [userId, setUserId] = useState<number>(0);
   const [orders, setOrders] = useState<Order[]>([]);
 
@@ -74,7 +74,7 @@ export default function History() {
                 />
                 <Stack justifyContent={"space-between"} width={"100%"}>
                   <Typography sx={{ fontSize: 18, fontWeight: 700 }}>
-                    {products[item.id].name}
+                    {getProduct(item.id)?.name}
                   </Typography>
                   <Stack>
                     <Stack direction={"row"} justifyContent={"space-between"}>
@@ -82,7 +82,7 @@ export default function History() {
                         {new Date(item.created_at).toLocaleDateString()}
                       </Typography>
                       <Typography sx={{ fontSize: 16 }}>
-                        ￥{products[item.id].price}
+                        ￥{getProduct(item.id)?.price}
                       </Typography>
                     </Stack>
                     <Typography sx={{ fontSize: 16 }}>

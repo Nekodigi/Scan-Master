@@ -5,8 +5,10 @@ import { createContext, useEffect, useRef, useState } from "react";
 type StoreVitalProps = {
   products: Product[];
   setProducts: React.Dispatch<React.SetStateAction<Product[]>>;
+  getProduct: (id: number) => Product | undefined;
   users: User[];
   setUsers: React.Dispatch<React.SetStateAction<User[]>>;
+  getUser: (id: number) => User | undefined;
 };
 
 export const StoreVitalContext = createContext<StoreVitalProps>(
@@ -127,9 +129,17 @@ export const StoreVitalProvider = ({
     }
   }, []);
 
+  const getProduct = (id: number) => {
+    return products.find((product) => product.id === id);
+  };
+
+  const getUser = (id: number) => {
+    return users.find((user) => user.id === id);
+  };
+
   return (
     <StoreVitalContext.Provider
-      value={{ products, setProducts, users, setUsers }}
+      value={{ products, setProducts, getProduct, users, setUsers, getUser }}
     >
       {products.length > 0 ? children : <p>Loading... </p>}
     </StoreVitalContext.Provider>

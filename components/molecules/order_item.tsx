@@ -8,7 +8,7 @@ type OrderItemProps = {
 };
 
 export function OrderItem({ item }: OrderItemProps) {
-  let { products } = useContext(StoreVitalContext);
+  let { products, getProduct } = useContext(StoreVitalContext);
 
   return (
     <Stack
@@ -17,11 +17,11 @@ export function OrderItem({ item }: OrderItemProps) {
       justifyContent={"space-between"}
     >
       <Stack direction={"row"}>
-        <Typography width={160}>{products[item.id].name}</Typography>
+        <Typography width={160}>{getProduct(item.id)?.name}</Typography>
         <Typography sx={{ fontWeight: 700 }}>x{item.quantity}</Typography>
       </Stack>
       <Typography sx={{ fontWeight: 700 }}>
-        ￥ {products[item.id].price}
+        ￥ {getProduct(item.id)?.price}
       </Typography>
     </Stack>
   );

@@ -30,7 +30,7 @@ export default function Home() {
     order_items: [],
   });
   //from context
-  const { products, users } = useContext(StoreVitalContext);
+  const { products, getProduct, users } = useContext(StoreVitalContext);
   // const [users, setUsers] = useState<User[]>([
   //   {
   //     id: 1,
@@ -103,7 +103,7 @@ export default function Home() {
 
   useEffect(() => {
     if (products.length > 0 && users.length > 0) {
-      addItem(2);
+      addItem(1);
     }
   }, [products, users]);
 
@@ -127,6 +127,7 @@ export default function Home() {
 
   const addItem = (id: number) => {
     const item = products.find((item) => item.id === id);
+    console.log(item);
 
     if (item) {
       const newOrder = { ...order };
@@ -158,7 +159,7 @@ export default function Home() {
   };
 
   const sum_price = order.order_items.reduce(
-    (sum, item) => sum + item.quantity * products[item.id].price,
+    (sum, item) => sum + item.quantity * getProduct(item.id)!.price,
     0
   );
   const sum_quantity = order.order_items.reduce(
