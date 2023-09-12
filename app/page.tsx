@@ -25,6 +25,8 @@ export default function Home() {
   const [result, setResult] = useState("");
   const [order, setOrder] = useState<Order>({
     id: undefined,
+    total_points: 0,
+    user_id: undefined,
     items: [],
   });
   //from context
@@ -102,7 +104,6 @@ export default function Home() {
   useEffect(() => {
     if (products.length > 0 && users.length > 0) {
       addItem(2);
-      setUserById(1);
     }
   }, [products, users]);
 
@@ -178,8 +179,11 @@ export default function Home() {
       });
     setOrder({
       id: undefined,
+      total_points: 0,
+      user_id: undefined,
       items: [],
     });
+    setUser(undefined);
   };
 
   return (

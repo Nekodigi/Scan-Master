@@ -14,7 +14,7 @@ export function Header({ selected }: { selected: "/" | "/qr_gen" }) {
       sx={{ borderBottom: 4, borderColor: borderColor }}
       elevation={0}
     >
-      <Toolbar>
+      <Toolbar sx={{ p: 0 }}>
         <Stack direction={"row"} gap={2} m={1.5}>
           {tabs.map((tab) => (
             <Button

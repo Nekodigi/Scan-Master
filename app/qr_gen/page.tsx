@@ -7,6 +7,8 @@ import {
   Autocomplete,
   Box,
   Button,
+  MenuItem,
+  Select,
   Stack,
   TextField,
   ToggleButton,
@@ -35,7 +37,7 @@ export default function Home() {
 
   const [user, setUser] = useState<User | undefined>(undefined);
 
-  const [label, setLabel] = useState<null | {label: string, id: number}>(null);
+  const [label, setLabel] = useState<null | number>(null);
 
   useEffect(() => {
     setLabel(null);
@@ -58,35 +60,37 @@ export default function Home() {
             <ToggleButton value="user">ユーザー</ToggleButton>
             <ToggleButton value="item">商品</ToggleButton>
           </ToggleButtonGroup>
-          <Autocomplete
-            disablePortal
+          <Select
             id="combo-box-demo"
-            options={
-              qrType == "user"
-                ? users.map((user) => {
-                    return { label: user.name, id: user.id };
-                  })
-                : products.map((product) => {
-                    return { label: product.name, id: product.id };
-                  })
-            }
             value={label}
-            onChange={(event, newValue) => {
-              if (newValue) {
+            onChange={(event) => {
+              if (event.target.value) {
                 setResult(
-                  `${qrType === "user" ? "9" : "4"}${newValue.id.toString()}`
+                  `${
+                    qrType === "user" ? "9" : "4"
+                  }${event.target.value.toString()}`
                 );
               }
-              setLabel(newValue);
+              setLabel(event.target.value as number);
             }}
             sx={{ width: 300 }}
-            renderInput={(params) => (
-              <TextField
-                {...params}
-                label={`${qrType === "user" ? "ユーザー" : "商品"}を選択`}
-              />
-            )}
-          />
+          >
+            {qrType == "user"
+              ? users.map((user) => {
+                  return (
+                    <MenuItem key={user.id} value={user.id}>
+                      {user.name}
+                    </MenuItem>
+                  );
+                })
+              : products.map((product) => {
+                  return (
+                    <MenuItem key={product.id} value={product.id}>
+                      {product.name}
+                    </MenuItem>
+                  );
+                })}
+          </Select>
           <TextField
             value={result}
             onChange={(v) => {

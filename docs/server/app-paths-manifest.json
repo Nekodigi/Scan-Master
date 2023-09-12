@@ -1,0 +1,7 @@
+{
+  "/page": "app/page.js",
+  "/qr_gen/page": "app/qr_gen/page.js",
+  "/notification/page": "app/notification/page.js",
+  "/recommend/page": "app/recommend/page.js",
+  "/history/page": "app/history/page.js"
+}

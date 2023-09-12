@@ -1,14 +1,85 @@
-import { Box, Container, Stack, Typography } from "@mui/material";
+"use client";
+
+import {
+  Box,
+  Button,
+  Container,
+  MenuItem,
+  Select,
+  Stack,
+  Typography,
+} from "@mui/material";
+import { useContext, useEffect, useMemo, useState } from "react";
+import { useSearchParams } from "next/navigation";
+import { StoreVitalContext } from "@/components/contexts/storeVital";
 
 export default function AddPoint() {
-  return (
-    <Container maxWidth="xs">
-      <Stack m={4} gap={8}>
+  const [order, setOrder] = useState<Order>();
+  const searchParams = useSearchParams();
+  const orderId = searchParams.get("orderId");
+  const { products, users } = useContext(StoreVitalContext);
+  const [userId, setUserId] = useState<number>(0);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      let options = {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          "ngrok-skip-browser-warning": "true",
+        },
+      };
+      fetch(`${process.env.NEXT_PUBLIC_API_URL}/orders/${orderId}`, options)
+        .then((res) => {
+          return res.json();
+        })
+        .then((json) => {
+          setOrder(json as Order);
+        });
+    };
+    fetchData();
+  }, []);
+
+  const linkUser = async () => {
+    let options = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "ngrok-skip-browser-warning": "true",
+      },
+    };
+    fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/link?order_id=${orderId}&user_id=${userId}`,
+      options
+    )
+      .then((res) => {
+        return res.text();
+      })
+      .then((text) => {
+        console.log(text);
+      });
+  };
+
+  const title = useMemo(
+    () =>
+      order?.user_id ? (
+        <Typography sx={{ fontSize: 24, fontWeight: 700 }}>
+          既にポイントが使われています
+        </Typography>
+      ) : (
         <Typography sx={{ fontSize: 24, fontWeight: 700 }}>
           今からでも
           <br />
-          21ポイント付きます！
+          {`${order?.total_points}ポイント付きます！`}
         </Typography>
+      ),
+    [order]
+  );
+
+  return order ? (
+    <Container maxWidth="xs">
+      <Stack m={4} gap={8}>
+        {title}
         <Stack>
           <Typography sx={{ fontSize: 24, fontWeight: 700 }}>
             Step1 アプリインストール
@@ -38,7 +109,27 @@ export default function AddPoint() {
         <Typography sx={{ fontSize: 24, fontWeight: 700 }}>
           Step2 ポイントを付ける
         </Typography>
+        <Select
+          id="combo-box-demo"
+          value={userId}
+          onChange={(event) => {
+            setUserId(event.target.value as number);
+          }}
+        >
+          {users.map((user) => {
+            return (
+              <MenuItem key={user.id} value={user.id}>
+                {user.name}
+              </MenuItem>
+            );
+          })}
+        </Select>
+        <Button variant="contained" onClick={() => linkUser()}>
+          ポイントを付ける
+        </Button>
       </Stack>
     </Container>
+  ) : (
+    <Box>loading...</Box>
   );
 }

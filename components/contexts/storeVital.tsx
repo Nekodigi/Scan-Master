@@ -51,7 +51,72 @@ export const StoreVitalProvider = ({
     };
     if (firstTime.current) {
       firstTime.current = false;
-      fetchData();
+      if (process.env.NEXT_PUBLIC_DATA === "DUMMY") {
+        setProducts([
+          {
+            id: 1,
+            name: "エスプレッソ",
+            price: 560,
+            quantity: 1,
+          },
+          {
+            id: 2,
+            name: "抹茶ラテ",
+            price: 670,
+            quantity: 1,
+          },
+          {
+            id: 3,
+            name: "カフェラテ",
+            price: 580,
+            quantity: 1,
+          },
+          {
+            id: 4,
+            name: "カプチーノ",
+            price: 580,
+            quantity: 1,
+          },
+          {
+            id: 5,
+            name: "アイスコーヒー",
+            price: 500,
+            quantity: 1,
+          },
+          {
+            id: 6,
+            name: "インスタントコーヒー",
+            price: 500,
+            quantity: 1,
+          },
+          {
+            id: 7,
+            name: "インド産コーヒー豆",
+            price: 500,
+            quantity: 1,
+          },
+        ]);
+        setUsers([
+          {
+            id: 1,
+            name: "山田太郎",
+          },
+          {
+            id: 2,
+            name: "田中花子",
+          },
+          {
+            id: 3,
+            name: "佐藤一郎",
+          },
+          {
+            id: 4,
+            name: "鈴木二郎",
+          },
+        ]);
+      } else {
+        fetchData();
+      }
     }
   }, []);
 

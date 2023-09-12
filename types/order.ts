@@ -7,5 +7,7 @@ type Product = {
 
 type Order = {
   id: number | undefined;
+  total_points: number;
+  user_id: number | undefined;
   items: Product[];
 };

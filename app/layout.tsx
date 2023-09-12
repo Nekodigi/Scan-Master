@@ -2,6 +2,7 @@ import { StoreVitalProvider } from "@/components/contexts/storeVital";
 import "./globals.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import ThemeRegistry from "./themeRegistory";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -18,7 +19,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <StoreVitalProvider>{children}</StoreVitalProvider>
+        <ThemeRegistry options={{ key: "mui" }}>
+          <StoreVitalProvider>{children}</StoreVitalProvider>
+        </ThemeRegistry>
       </body>
     </html>
   );
