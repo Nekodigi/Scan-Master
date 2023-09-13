@@ -58,7 +58,7 @@ export default function AddPoint() {
       .then((text) => {
         console.log(text);
       });
-    window.location.href = `/notify/?title=ポイントが付きました`;
+    window.location.href = `/notify?title=ポイントが付きました`;
   };
 
   const title = useMemo(
@@ -81,7 +81,6 @@ export default function AddPoint() {
     <Container maxWidth="xs">
       <Stack m={4} gap={8}>
         {title}
-        
 
         {order?.user_id ? (
           <Button variant="contained" href="/recommend">
@@ -89,35 +88,35 @@ export default function AddPoint() {
           </Button>
         ) : (
           <>
-          <Stack>
-          <Typography sx={{ fontSize: 24, fontWeight: 700 }}>
-            Step1 アプリインストール
-          </Typography>
-          <Typography>
-            お使いのスマートフォンにアプリをインストールしてください。
-          </Typography>
-          <Stack direction={"row"} gap={2}>
-            <a href="https://play.google.com/store/apps/details?id=com.saltahiko">
-              <img
-                height={64}
-                alt="Google Play で手に入れよう"
-                src="https://play.google.com/intl/en_us/badges/static/images/badges/ja_badge_web_generic.png"
-              />
-            </a>
+            <Stack>
+              <Typography sx={{ fontSize: 24, fontWeight: 700 }}>
+                Step1 アプリインストール
+              </Typography>
+              <Typography>
+                お使いのスマートフォンにアプリをインストールしてください。
+              </Typography>
+              <Stack direction={"row"} gap={2}>
+                <a href="https://play.google.com/store/apps/details?id=com.saltahiko">
+                  <img
+                    height={64}
+                    alt="Google Play で手に入れよう"
+                    src="https://play.google.com/intl/en_us/badges/static/images/badges/ja_badge_web_generic.png"
+                  />
+                </a>
 
-            <a href="https://apps.apple.com/jp/app/%E3%82%B5%E3%83%AB%E3%82%BF%E3%83%92%E3%82%B3/id1540286707">
-              <img
-                height={64}
-                style={{ paddingTop: 8, paddingBottom: 8 }}
-                alt="App Store で手に入れよう"
-                src="https://developer.apple.com/app-store/marketing/guidelines/images/badge-download-on-the-app-store.svg"
-              />
-            </a>
-          </Stack>
-        </Stack>
-        <Typography sx={{ fontSize: 24, fontWeight: 700 }}>
-          Step2 ポイントを付ける
-        </Typography>
+                <a href="https://apps.apple.com/jp/app/%E3%82%B5%E3%83%AB%E3%82%BF%E3%83%92%E3%82%B3/id1540286707">
+                  <img
+                    height={64}
+                    style={{ paddingTop: 8, paddingBottom: 8 }}
+                    alt="App Store で手に入れよう"
+                    src="https://developer.apple.com/app-store/marketing/guidelines/images/badge-download-on-the-app-store.svg"
+                  />
+                </a>
+              </Stack>
+            </Stack>
+            <Typography sx={{ fontSize: 24, fontWeight: 700 }}>
+              Step2 ポイントを付ける
+            </Typography>
             <Select
               id="combo-box-demo"
               value={userId}

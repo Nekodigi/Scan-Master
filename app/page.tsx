@@ -196,7 +196,7 @@ export default function Home() {
         console.log(res);
         order.id = res.id;
         //move to link
-        window.location.href = `/link_qr/?orderId=${res.id}`;
+        window.location.href = `/link_qr?orderId=${res.id}`;
       });
     setOrder({
       id: undefined,
