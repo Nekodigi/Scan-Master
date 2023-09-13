@@ -101,11 +101,11 @@ export default function Home() {
     },
   });
 
-  useEffect(() => {
-    if (products.length > 0 && users.length > 0) {
-      addItem(1);
-    }
-  }, [products, users]);
+  // useEffect(() => {
+  //   if (products.length > 0 && users.length > 0) {
+  //     addItem(1);
+  //   }
+  // }, [products, users]);
 
   const actionById = (id: number) => {
     //if msb is 4 then it is a product id
@@ -145,19 +145,6 @@ export default function Home() {
       }
       setOrder(newOrder);
     }
-
-    // item!.quantity = 1;
-    // if (item) {
-    //   const newOrder = { ...order };
-    //   const index = newOrder.order_items.findIndex((item) => item.id === id);
-    //   if (index >= 0) {
-    //     let p = newOrder.order_items[index]!;
-    //     p.quantity += 1;
-    //   } else {
-    //     newOrder.order_items.push({ ...item });
-    //   }
-    //   setOrder(newOrder);
-    // }
   };
 
   const sum_price = order.order_items.reduce(
