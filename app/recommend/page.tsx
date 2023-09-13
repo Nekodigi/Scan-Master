@@ -28,7 +28,7 @@ export default function Notify() {
   const title = searchParams.get("title");
   const { products, users } = useContext(StoreVitalContext);
   const [userId, setUserId] = useState<number>(0);
-  const [orderItems, setOrderItems] = useState<OrderItem[]>([]);
+  const [recProducts, setRecProducts] = useState<Product[]>([]);
 
   const user_id = 1;
 
@@ -46,9 +46,9 @@ export default function Notify() {
           return res.json();
         })
         .then((json) => {
-          console.log(json as OrderItem[]);
-          console.log(products);
-          setOrderItems(json as OrderItem[]);
+          //console.log(json as Product[]);
+          //console.log(products);
+          setRecProducts(json as Product[]);
         });
     };
     fetchData();
@@ -60,8 +60,8 @@ export default function Notify() {
 
       <Container maxWidth="xs">
         <Grid container direction="row" mt={1} spacing={2}>
-          {orderItems.map((orderItem) => (
-            <Grid item xs={6} key={orderItem.id}>
+          {recProducts.map((recProduct) => (
+            <Grid item xs={6} key={recProduct.id}>
               <Stack
                 sx={{
                   borderBottom: 1,
@@ -78,10 +78,10 @@ export default function Notify() {
 
                 <Stack alignItems={"center"} width={"100%"} p={1}>
                   <Typography sx={{ fontSize: 14, fontWeight: 700 }}>
-                    {products[orderItem.id].name}
+                    {recProduct.name}
                   </Typography>
                   <Typography sx={{ fontSize: 14, color: darkGrayColor }}>
-                    ￥ {products[orderItem.id].price}
+                    ￥ {recProduct.price}
                   </Typography>
                 </Stack>
               </Stack>

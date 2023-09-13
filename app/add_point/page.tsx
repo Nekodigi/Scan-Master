@@ -58,6 +58,7 @@ export default function AddPoint() {
       .then((text) => {
         console.log(text);
       });
+    window.location.href = `/notify/?title=ポイントが付きました`;
   };
 
   const title = useMemo(
@@ -80,7 +81,15 @@ export default function AddPoint() {
     <Container maxWidth="xs">
       <Stack m={4} gap={8}>
         {title}
-        <Stack>
+        
+
+        {order?.user_id ? (
+          <Button variant="contained" href="/recommend">
+            ホームに戻る
+          </Button>
+        ) : (
+          <>
+          <Stack>
           <Typography sx={{ fontSize: 24, fontWeight: 700 }}>
             Step1 アプリインストール
           </Typography>
@@ -109,24 +118,26 @@ export default function AddPoint() {
         <Typography sx={{ fontSize: 24, fontWeight: 700 }}>
           Step2 ポイントを付ける
         </Typography>
-        <Select
-          id="combo-box-demo"
-          value={userId}
-          onChange={(event) => {
-            setUserId(event.target.value as number);
-          }}
-        >
-          {users.map((user) => {
-            return (
-              <MenuItem key={user.id} value={user.id}>
-                {user.name}
-              </MenuItem>
-            );
-          })}
-        </Select>
-        <Button variant="contained" onClick={() => linkUser()}>
-          ポイントを付ける
-        </Button>
+            <Select
+              id="combo-box-demo"
+              value={userId}
+              onChange={(event) => {
+                setUserId(event.target.value as number);
+              }}
+            >
+              {users.map((user) => {
+                return (
+                  <MenuItem key={user.id} value={user.id}>
+                    {user.name}
+                  </MenuItem>
+                );
+              })}
+            </Select>
+            <Button variant="contained" onClick={() => linkUser()}>
+              ポイントを付ける
+            </Button>
+          </>
+        )}
       </Stack>
     </Container>
   ) : (

@@ -23,6 +23,9 @@ export default function Notify() {
     <Container maxWidth="xs">
       <Stack m={4} gap={8} mt={12}>
         <Typography sx={{ fontSize: 24, fontWeight: 700 }}>{title}</Typography>
+        <Button variant="contained" href="/recommend">
+          アプリへ戻る
+        </Button>
       </Stack>
     </Container>
   );

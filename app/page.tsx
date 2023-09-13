@@ -189,10 +189,14 @@ export default function Home() {
       body: JSON.stringify(request),
     })
       .then((res) => {
-        return res.text();
+        return res.json();
       })
-      .then((text) => {
-        console.log(text);
+      .then((json) => {
+        let res = json as Order;
+        console.log(res);
+        order.id = res.id;
+        //move to link
+        window.location.href = `/link_qr/?orderId=${res.id}`;
       });
     setOrder({
       id: undefined,
