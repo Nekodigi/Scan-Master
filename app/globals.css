@@ -14,6 +14,9 @@
   margin: 0;
   /* white space wrap */
   word-wrap: break-word;
+
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
 }
 
 html,
@@ -35,4 +38,9 @@ body {
 a {
   color: inherit;
   text-decoration: none;
+}
+
+/* Path: app/globals.css */
+::-webkit-scrollbar {
+  display: none;
 }

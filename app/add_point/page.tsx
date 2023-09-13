@@ -96,7 +96,7 @@ export default function AddPoint() {
                 お使いのスマートフォンにアプリをインストールしてください。
               </Typography>
               <Stack direction={"row"} gap={2}>
-                <a href="https://play.google.com/store/apps/details?id=com.saltahiko">
+                <a href="https://play.google.com/store/apps/details?id=co.sarutahiko.app">
                   <img
                     height={64}
                     alt="Google Play で手に入れよう"

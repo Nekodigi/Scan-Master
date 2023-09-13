@@ -26,11 +26,9 @@ import { HeaderApp } from "@/components/organisms/headerApp";
 export default function Notify() {
   const searchParams = useSearchParams();
   const title = searchParams.get("title");
-  const { products, users } = useContext(StoreVitalContext);
+  const { products, users, user } = useContext(StoreVitalContext);
   const [userId, setUserId] = useState<number>(0);
   const [recProducts, setRecProducts] = useState<Product[]>([]);
-
-  const user_id = 1;
 
   useEffect(() => {
     const fetchData = async () => {
@@ -41,7 +39,7 @@ export default function Notify() {
           "ngrok-skip-browser-warning": "true",
         },
       };
-      fetch(`${process.env.NEXT_PUBLIC_API_URL}/recommends/${user_id}`, options)
+      fetch(`${process.env.NEXT_PUBLIC_API_URL}/recommends/${user?.id}`, options)
         .then((res) => {
           return res.json();
         })
@@ -73,11 +71,18 @@ export default function Notify() {
                 <img
                   width={"100%"}
                   style={{ objectFit: "cover", aspectRatio: 1 }}
-                  src="https://post.medicalnewstoday.com/wp-content/uploads/sites/3/2020/02/323594_2200-1200x628.jpg"
+                  src={recProduct.image_url}
                 />
 
                 <Stack alignItems={"center"} width={"100%"} p={1}>
-                  <Typography sx={{ fontSize: 14, fontWeight: 700 }}>
+                  <Typography
+                    sx={{
+                      fontSize: 14,
+                      fontWeight: 700,
+                      height: 40,
+                      textAlign: "center",
+                    }}
+                  >
                     {recProduct.name}
                   </Typography>
                   <Typography sx={{ fontSize: 14, color: darkGrayColor }}>
