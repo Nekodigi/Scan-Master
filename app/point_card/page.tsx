@@ -56,7 +56,7 @@ export default function History() {
       <HeaderApp selected="/point_card" />
 
       <Container maxWidth="xs">
-        <Stack mt={3}>
+        <Stack mt={3} gap={4}>
           <Box>
             <img
               width={"100%"}
@@ -71,8 +71,9 @@ export default function History() {
           </Box>
           <QRCode
             value={`9${user?.id}`}
-            size={256}
+            size={128}
             style={{ alignSelf: "center" }}
+            fgColor={accentColor}
           />
         </Stack>
       </Container>

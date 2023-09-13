@@ -212,7 +212,7 @@ export default function Home() {
   return (
     <main>
       <Stack direction={"row"}>
-        <Stack gap={2} width="100%" mx={2} height={"100vh"}>
+        <Stack gap={2} width="100%" mx={4} height={"100vh"} overflow={"scroll"}>
           <Header selected="/" />
           <Box>
             <video ref={ref} style={{ borderRadius: 32, width: "100%" }} />
@@ -233,12 +233,12 @@ export default function Home() {
           />
         </Stack>
         <Stack
-          width={360}
-          minWidth={360}
+          width={480}
+          minWidth={480}
           sx={{ borderLeft: 4, borderColor: borderColor, height: "100vh" }}
           direction={"column"}
         >
-          <Stack px={2} height={"100%"}>
+          <Stack px={2} height={"100%"} overflow={"scroll"}>
             {order.order_items.map((item) => (
               <OrderItem key={item.product_id} item={item} />
             ))}

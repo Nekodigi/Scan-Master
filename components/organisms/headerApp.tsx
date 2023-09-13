@@ -9,6 +9,7 @@ import {
   AppBar,
   Box,
   Button,
+  Container,
   IconButton,
   MenuItem,
   Modal,
@@ -18,7 +19,7 @@ import {
   Typography,
 } from "@mui/material";
 import Link from "next/link";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { StoreVitalContext } from "../contexts/storeVital";
 
 export function HeaderApp({
@@ -37,103 +38,117 @@ export function HeaderApp({
   const [open, setOpen] = useState(false);
 
   return (
-    <AppBar
-      position="static"
-      color="transparent"
-      sx={{
-        borderBottom: 1,
-        borderColor: borderColor,
-        boxSizing: "border-box",
-      }}
-      elevation={0}
-    >
-      <Toolbar sx={{ p: 0, justifyContent: "center" }}>
-        <Stack>
-          <Box
-            p={2}
-            display="flex"
-            justifyContent="center"
-            alignContent="center"
-          >
-            <IconButton
-              sx={{
-                position: "absolute",
-                left: 16,
-                top: 6,
-                flexDirection: "column",
-              }}
-              size="large"
-              onClick={() => setOpen(true)}
-            >
-              <Person fontSize="inherit" />
-              <Typography sx={{ fontSize: 14 }}>{user?.name}</Typography>
-            </IconButton>
-            <Typography
-              sx={{
-                fontSize: 24,
-                color: accentColor,
-                fontWeight: 700,
-                fontFamily: "Cinzel",
-              }}
-            >
-              S COFFEE
-            </Typography>
-          </Box>
-          <Box overflow={"scroll"} width={"100vw"}>
-            <Stack direction={"row"} width={"max-content"}>
-              {tabs.map((tab) => (
-                <Button
-                  key={tab.name}
-                  sx={{
-                    color: selected == tab.url ? "black" : grayColor,
-                    fontWeight: 700,
-                    fontSize: 16,
-                    px: 3,
-                    py: 0.5,
-                    borderRadius: 0,
-                    // selected == tab.url ? accentColor : "transparent",
-                    borderBottom: selected == tab.url ? 2 : 0,
-                    borderColor: accentColor,
-                  }}
-                  component={Link}
-                  href={tab.url}
-                >
-                  {tab.name}
-                </Button>
-              ))}
-            </Stack>
-          </Box>
-        </Stack>
-      </Toolbar>
-      <Modal
-        open={open}
-        onClose={() => setOpen(false)}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
+    <>
+      <AppBar
+        position="fixed"
+        color="transparent"
+        sx={{
+          borderBottom: 1,
+          borderColor: borderColor,
+          boxSizing: "border-box",
+        }}
+        elevation={0}
       >
-        <Box sx={style}>
-          <Typography id="modal-modal-title" variant="h6" component="h2">
-            ユーザー選択
-          </Typography>
-          <Select
-            id="combo-box-demo"
-            value={user?.id}
-            onChange={(event) => {
-              setUser(users.find((user) => user.id == event.target.value));
-            }}
-            sx={{ width: 300 }}
-          >
-            {users.map((user) => {
-              return (
-                <MenuItem key={user.id} value={user.id}>
-                  {user.name}
-                </MenuItem>
-              );
-            })}
-          </Select>
-        </Box>
-      </Modal>
-    </AppBar>
+        <Toolbar sx={{ p: 0, justifyContent: "center" }}>
+          <Stack>
+            <Container
+              sx={{
+                p: 2,
+                display: "flex",
+                justifyContent: "center",
+                alignContent: "center",
+                position: "relative",
+              }}
+              maxWidth="xs"
+            >
+              <IconButton
+                sx={{
+                  position: "absolute",
+                  left: 16,
+                  top: 6,
+                  flexDirection: "column",
+                }}
+                size="large"
+                onClick={() => setOpen(true)}
+              >
+                <Person fontSize="inherit" />
+                <Typography sx={{ fontSize: 12 }}>{user?.name}</Typography>
+              </IconButton>
+              <Typography
+                sx={{
+                  fontSize: 24,
+                  color: accentColor,
+                  fontWeight: 700,
+                  fontFamily: "Cinzel",
+                }}
+              >
+                S COFFEE
+              </Typography>
+            </Container>
+            <Box
+              overflow={"scroll"}
+              width={"100vw"}
+              sx={{
+                width: "100vw",
+              }}
+            >
+              <Stack direction={"row"} width={"max-content"} mx={"auto"}>
+                {tabs.map((tab) => (
+                  <Button
+                    key={tab.name}
+                    sx={{
+                      color: selected == tab.url ? "black" : grayColor,
+                      fontWeight: 700,
+                      fontSize: 16,
+                      px: 3,
+                      py: 0.5,
+                      borderRadius: 0,
+                      // selected == tab.url ? accentColor : "transparent",
+                      borderBottom: selected == tab.url ? 2 : 0,
+                      borderColor: accentColor,
+                    }}
+                    component={Link}
+                    href={tab.url}
+                  >
+                    {tab.name}
+                  </Button>
+                ))}
+              </Stack>
+            </Box>
+          </Stack>
+        </Toolbar>
+        <Modal
+          open={open}
+          onClose={() => setOpen(false)}
+          aria-labelledby="modal-modal-title"
+          aria-describedby="modal-modal-description"
+        >
+          <Box sx={style}>
+            <Typography id="modal-modal-title" variant="h6" component="h2">
+              ユーザー選択
+            </Typography>
+            <Select
+              id="combo-box-demo"
+              value={user?.id}
+              onChange={(event) => {
+                setUser(users.find((user) => user.id == event.target.value));
+              }}
+              sx={{ width: 300 }}
+            >
+              {users.map((user) => {
+                return (
+                  <MenuItem key={user.id} value={user.id}>
+                    {user.name}
+                  </MenuItem>
+                );
+              })}
+            </Select>
+          </Box>
+        </Modal>
+      </AppBar>
+
+      <Toolbar style={{ height: 107 }} />
+    </>
   );
 }
 

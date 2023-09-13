@@ -9,7 +9,7 @@ type StoreVitalProps = {
   users: User[];
   setUsers: React.Dispatch<React.SetStateAction<User[]>>;
   user: User | undefined;
-  setUser: React.Dispatch<React.SetStateAction<User | undefined>>;
+  setUser: (user: User | undefined) => void;
   getUser: (id: number) => User | undefined;
 };
 
@@ -24,7 +24,7 @@ export const StoreVitalProvider = ({
 }) => {
   const [users, setUsers] = useState<User[]>([]);
   const [products, setProducts] = useState<Product[]>([]);
-  const [user, setUser] = useState<User>();
+  const [user, setUser_] = useState<User>();
   //check if first time
   const firstTime = useRef(true);
 
@@ -49,10 +49,17 @@ export const StoreVitalProvider = ({
           return res.json();
         })
         .then((json) => {
-          setUsers(json as User[]);
-        });
+          let users_ = json as User[];
+          setUsers(users_);
 
-      //setProducts(products as Product[]);
+          let user_id = localStorage.getItem("user_id");
+          if (user_id) {
+            let user_ = users_.find((user) => user.id === parseInt(user_id!));
+            if (user_) {
+              setUser(user_);
+            }
+          }
+        });
     };
     if (firstTime.current) {
       firstTime.current = false;
@@ -145,6 +152,14 @@ export const StoreVitalProvider = ({
 
   const getUser = (id: number) => {
     return users.find((user) => user.id === id);
+  };
+
+  const setUser = (user: User | undefined) => {
+    setUser_(user);
+    //local storage
+    if (user) {
+      localStorage.setItem("user_id", user.id.toString());
+    }
   };
 
   return (
