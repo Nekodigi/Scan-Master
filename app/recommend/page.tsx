@@ -26,11 +26,9 @@ import { HeaderApp } from "@/components/organisms/headerApp";
 export default function Notify() {
   const searchParams = useSearchParams();
   const title = searchParams.get("title");
-  const { products, users } = useContext(StoreVitalContext);
+  const { products, users, user } = useContext(StoreVitalContext);
   const [userId, setUserId] = useState<number>(0);
-  const [orderItems, setOrderItems] = useState<OrderItem[]>([]);
-
-  const user_id = 1;
+  const [recProducts, setRecProducts] = useState<Product[]>([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -41,14 +39,14 @@ export default function Notify() {
           "ngrok-skip-browser-warning": "true",
         },
       };
-      fetch(`${process.env.NEXT_PUBLIC_API_URL}/recommends/${user_id}`, options)
+      fetch(`${process.env.NEXT_PUBLIC_API_URL}/recommends/${user?.id}`, options)
         .then((res) => {
           return res.json();
         })
         .then((json) => {
-          console.log(json as OrderItem[]);
-          console.log(products);
-          setOrderItems(json as OrderItem[]);
+          //console.log(json as Product[]);
+          //console.log(products);
+          setRecProducts(json as Product[]);
         });
     };
     fetchData();
@@ -60,8 +58,8 @@ export default function Notify() {
 
       <Container maxWidth="xs">
         <Grid container direction="row" mt={1} spacing={2}>
-          {orderItems.map((orderItem) => (
-            <Grid item xs={6} key={orderItem.id}>
+          {recProducts.map((recProduct) => (
+            <Grid item xs={6} key={recProduct.id}>
               <Stack
                 sx={{
                   borderBottom: 1,
@@ -73,15 +71,22 @@ export default function Notify() {
                 <img
                   width={"100%"}
                   style={{ objectFit: "cover", aspectRatio: 1 }}
-                  src="https://post.medicalnewstoday.com/wp-content/uploads/sites/3/2020/02/323594_2200-1200x628.jpg"
+                  src={recProduct.image_url}
                 />
 
                 <Stack alignItems={"center"} width={"100%"} p={1}>
-                  <Typography sx={{ fontSize: 14, fontWeight: 700 }}>
-                    {products[orderItem.id].name}
+                  <Typography
+                    sx={{
+                      fontSize: 14,
+                      fontWeight: 700,
+                      height: 40,
+                      textAlign: "center",
+                    }}
+                  >
+                    {recProduct.name}
                   </Typography>
                   <Typography sx={{ fontSize: 14, color: darkGrayColor }}>
-                    ￥ {products[orderItem.id].price}
+                    ￥ {recProduct.price}
                   </Typography>
                 </Stack>
               </Stack>

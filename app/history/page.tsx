@@ -24,11 +24,8 @@ import { HeaderApp } from "@/components/organisms/headerApp";
 export default function History() {
   const searchParams = useSearchParams();
   const title = searchParams.get("title");
-  const { products, getProduct, users } = useContext(StoreVitalContext);
-  const [userId, setUserId] = useState<number>(0);
+  const { products, getProduct, users, user } = useContext(StoreVitalContext);
   const [orders, setOrders] = useState<Order[]>([]);
-
-  const user_id = 1;
 
   useEffect(() => {
     const fetchData = async () => {
@@ -39,7 +36,7 @@ export default function History() {
           "ngrok-skip-browser-warning": "true",
         },
       };
-      fetch(`${process.env.NEXT_PUBLIC_API_URL}/histories/${user_id}`, options)
+      fetch(`${process.env.NEXT_PUBLIC_API_URL}/histories/${user?.id}`, options)
         .then((res) => {
           return res.json();
         })
@@ -50,7 +47,7 @@ export default function History() {
         });
     };
     fetchData();
-  }, []);
+  }, [user]);
 
   return (
     <Box>
@@ -64,17 +61,17 @@ export default function History() {
                 direction={"row"}
                 m={3}
                 gap={1.5}
-                key={`${order.id}${item.id}`}
+                key={`${order.id}${item.product_id}`}
               >
                 <img
                   width={128}
                   height={128}
                   style={{ objectFit: "cover", borderRadius: 4 }}
-                  src="https://post.medicalnewstoday.com/wp-content/uploads/sites/3/2020/02/323594_2200-1200x628.jpg"
+                  src={getProduct(item.product_id)?.image_url}
                 />
                 <Stack justifyContent={"space-between"} width={"100%"}>
                   <Typography sx={{ fontSize: 18, fontWeight: 700 }}>
-                    {getProduct(item.id)?.name}
+                    {getProduct(item.product_id)?.name}
                   </Typography>
                   <Stack>
                     <Stack direction={"row"} justifyContent={"space-between"}>
@@ -82,7 +79,7 @@ export default function History() {
                         {new Date(item.created_at).toLocaleDateString()}
                       </Typography>
                       <Typography sx={{ fontSize: 16 }}>
-                        ￥{getProduct(item.id)?.price}
+                        ￥{getProduct(item.product_id)?.price}
                       </Typography>
                     </Stack>
                     <Typography sx={{ fontSize: 16 }}>

@@ -2,12 +2,13 @@ type Product = {
   id: number;
   name: string;
   price: number;
+  image_url: string;
   created_at: string;
   updated_at: string;
 };
 
 type OrderItem = {
-  id: number;
+  product_id: number;
   order_id: number;
   name: string;
   quantity: number;

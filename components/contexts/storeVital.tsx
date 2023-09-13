@@ -8,6 +8,8 @@ type StoreVitalProps = {
   getProduct: (id: number) => Product | undefined;
   users: User[];
   setUsers: React.Dispatch<React.SetStateAction<User[]>>;
+  user: User | undefined;
+  setUser: React.Dispatch<React.SetStateAction<User | undefined>>;
   getUser: (id: number) => User | undefined;
 };
 
@@ -22,6 +24,7 @@ export const StoreVitalProvider = ({
 }) => {
   const [users, setUsers] = useState<User[]>([]);
   const [products, setProducts] = useState<Product[]>([]);
+  const [user, setUser] = useState<User>();
   //check if first time
   const firstTime = useRef(true);
 
@@ -59,6 +62,7 @@ export const StoreVitalProvider = ({
             id: 1,
             name: "エスプレッソ",
             price: 560,
+            image_url: "https://picsum.photos/200",
             created_at: new Date().toString(),
             updated_at: new Date().toString(),
           },
@@ -66,6 +70,7 @@ export const StoreVitalProvider = ({
             id: 2,
             name: "抹茶ラテ",
             price: 670,
+            image_url: "https://picsum.photos/200",
             created_at: new Date().toString(),
             updated_at: new Date().toString(),
           },
@@ -73,6 +78,7 @@ export const StoreVitalProvider = ({
             id: 3,
             name: "カフェラテ",
             price: 580,
+            image_url: "https://picsum.photos/200",
             created_at: new Date().toString(),
             updated_at: new Date().toString(),
           },
@@ -80,6 +86,7 @@ export const StoreVitalProvider = ({
             id: 4,
             name: "カプチーノ",
             price: 580,
+            image_url: "https://picsum.photos/200",
             created_at: new Date().toString(),
             updated_at: new Date().toString(),
           },
@@ -87,6 +94,7 @@ export const StoreVitalProvider = ({
             id: 5,
             name: "アイスコーヒー",
             price: 500,
+            image_url: "https://picsum.photos/200",
             created_at: new Date().toString(),
             updated_at: new Date().toString(),
           },
@@ -94,6 +102,7 @@ export const StoreVitalProvider = ({
             id: 6,
             name: "インスタントコーヒー",
             price: 500,
+            image_url: "https://picsum.photos/200",
             created_at: new Date().toString(),
             updated_at: new Date().toString(),
           },
@@ -101,6 +110,7 @@ export const StoreVitalProvider = ({
             id: 7,
             name: "インド産コーヒー豆",
             price: 500,
+            image_url: "https://picsum.photos/200",
             created_at: new Date().toString(),
             updated_at: new Date().toString(),
           },
@@ -139,7 +149,16 @@ export const StoreVitalProvider = ({
 
   return (
     <StoreVitalContext.Provider
-      value={{ products, setProducts, getProduct, users, setUsers, getUser }}
+      value={{
+        products,
+        setProducts,
+        getProduct,
+        users,
+        setUsers,
+        user,
+        setUser,
+        getUser,
+      }}
     >
       {products.length > 0 ? children : <p>Loading... </p>}
     </StoreVitalContext.Provider>

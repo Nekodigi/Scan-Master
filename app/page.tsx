@@ -14,7 +14,7 @@ import {
 import { borderColor, primaryColor } from "@/style/color";
 import { useZxing } from "react-zxing";
 import { useContext, useEffect, useState } from "react";
-import { OrderItem } from "@/components/molecules/order_item";
+import { OrderItem } from "@/components/molecules/orderItem";
 import { StoreVitalContext } from "@/components/contexts/storeVital";
 import { Header } from "@/components/organisms/header";
 
@@ -131,13 +131,15 @@ export default function Home() {
 
     if (item) {
       const newOrder = { ...order };
-      const index = newOrder.order_items.findIndex((item) => item.id === id);
+      const index = newOrder.order_items.findIndex(
+        (item) => item.product_id === id
+      );
       if (index >= 0) {
         let p = newOrder.order_items[index]!;
         p.quantity += 1;
       } else {
         let orderItem = {} as OrderItem;
-        orderItem.id = item.id;
+        orderItem.product_id = item.id;
         orderItem.quantity = 1;
         newOrder.order_items.push({ ...orderItem });
       }
@@ -159,7 +161,7 @@ export default function Home() {
   };
 
   const sum_price = order.order_items.reduce(
-    (sum, item) => sum + item.quantity * getProduct(item.id)!.price,
+    (sum, item) => sum + item.quantity * getProduct(item.product_id)!.price,
     0
   );
   const sum_quantity = order.order_items.reduce(
@@ -175,7 +177,7 @@ export default function Home() {
       total_points: sum_point,
       order_items: order.order_items.map((item) => {
         return {
-          product_id: item.id,
+          product_id: item.product_id,
           quantity: item.quantity,
         };
       }),
@@ -189,10 +191,14 @@ export default function Home() {
       body: JSON.stringify(request),
     })
       .then((res) => {
-        return res.text();
+        return res.json();
       })
-      .then((text) => {
-        console.log(text);
+      .then((json) => {
+        let res = json as Order;
+        console.log(res);
+        order.id = res.id;
+        //move to link
+        window.location.href = `/link_qr?orderId=${res.id}`;
       });
     setOrder({
       id: undefined,
@@ -234,7 +240,7 @@ export default function Home() {
         >
           <Stack px={2} height={"100%"}>
             {order.order_items.map((item) => (
-              <OrderItem key={item.id} item={item} />
+              <OrderItem key={item.product_id} item={item} />
             ))}
           </Stack>
           <Stack
