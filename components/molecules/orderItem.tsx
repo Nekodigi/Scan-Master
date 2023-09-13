@@ -17,11 +17,11 @@ export function OrderItem({ item }: OrderItemProps) {
       justifyContent={"space-between"}
     >
       <Stack direction={"row"}>
-        <Typography width={160}>{getProduct(item.id)?.name}</Typography>
+        <Typography width={160}>{getProduct(item.product_id)?.name}</Typography>
         <Typography sx={{ fontWeight: 700 }}>x{item.quantity}</Typography>
       </Stack>
       <Typography sx={{ fontWeight: 700 }}>
-        ￥ {getProduct(item.id)?.price}
+        ￥ {getProduct(item.product_id)?.price}
       </Typography>
     </Stack>
   );

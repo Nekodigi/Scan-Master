@@ -23,7 +23,7 @@ import {
   primaryColor,
 } from "@/style/color";
 import { useContext, useEffect, useState } from "react";
-import { OrderItem } from "@/components/molecules/order_item";
+import { OrderItem } from "@/components/molecules/orderItem";
 import { StoreVitalContext } from "@/components/contexts/storeVital";
 import QRCode from "react-qr-code";
 import { Header } from "@/components/organisms/header";

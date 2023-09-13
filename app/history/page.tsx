@@ -64,7 +64,7 @@ export default function History() {
                 direction={"row"}
                 m={3}
                 gap={1.5}
-                key={`${order.id}${item.id}`}
+                key={`${order.id}${item.product_id}`}
               >
                 <img
                   width={128}
@@ -74,7 +74,7 @@ export default function History() {
                 />
                 <Stack justifyContent={"space-between"} width={"100%"}>
                   <Typography sx={{ fontSize: 18, fontWeight: 700 }}>
-                    {getProduct(item.id)?.name}
+                    {getProduct(item.product_id)?.name}
                   </Typography>
                   <Stack>
                     <Stack direction={"row"} justifyContent={"space-between"}>
@@ -82,7 +82,7 @@ export default function History() {
                         {new Date(item.created_at).toLocaleDateString()}
                       </Typography>
                       <Typography sx={{ fontSize: 16 }}>
-                        ￥{getProduct(item.id)?.price}
+                        ￥{getProduct(item.product_id)?.price}
                       </Typography>
                     </Stack>
                     <Typography sx={{ fontSize: 16 }}>
