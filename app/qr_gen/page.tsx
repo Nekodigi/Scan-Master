@@ -47,7 +47,7 @@ export default function Home() {
 
   return (
     <Stack direction={"row"}>
-      <Stack gap={2} width="100%" mx={2} height={"100vh"}>
+      <Stack gap={2} width="100%" mx={2} height={"100svh"}>
         <Header selected="/qr_gen" />
         <Box></Box>
         <ToggleButtonGroup

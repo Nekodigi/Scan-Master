@@ -212,7 +212,13 @@ export default function Home() {
   return (
     <main>
       <Stack direction={"row"}>
-        <Stack gap={2} width="100%" mx={4} height={"100vh"} overflow={"scroll"}>
+        <Stack
+          gap={2}
+          width="100%"
+          mx={4}
+          height={"100svh"}
+          overflow={"scroll"}
+        >
           <Header selected="/" />
           <Box>
             <video ref={ref} style={{ borderRadius: 32, width: "100%" }} />
@@ -235,7 +241,7 @@ export default function Home() {
         <Stack
           width={480}
           minWidth={480}
-          sx={{ borderLeft: 4, borderColor: borderColor, height: "100vh" }}
+          sx={{ borderLeft: 4, borderColor: borderColor, height: "100svh" }}
           direction={"column"}
         >
           <Stack px={2} height={"100%"} overflow={"scroll"}>
