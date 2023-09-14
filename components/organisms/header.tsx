@@ -1,5 +1,6 @@
 import { backgroundColor, borderColor, grayColor } from "@/style/color";
 import { AppBar, Button, Stack, Toolbar } from "@mui/material";
+import Link from "next/link";
 
 export function Header({
   selected,
@@ -39,7 +40,8 @@ export function Header({
                   background:
                     selected == tab.name ? backgroundColor : "transparent",
                 }}
-                href={isSamePage ? undefined : tab.url}
+                component={Link}
+                href={tab.url}
                 onClick={
                   isSamePage
                     ? () => {

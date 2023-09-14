@@ -16,6 +16,7 @@ import {
   Modal,
   Select,
   Stack,
+  TextField,
   Toolbar,
   Typography,
 } from "@mui/material";
@@ -26,7 +27,13 @@ import { StoreVitalContext } from "../contexts/storeVital";
 export function HeaderApp({
   selected,
 }: {
-  selected: "/history" | "/recommend" | "/notification" | "/point_card";
+  selected:
+    | "/history"
+    | "/recommend"
+    | "/notification"
+    | "/point_card"
+    | "/add_point"
+    | "/notify";
 }) {
   const tabs = [
     { name: "ポイント", url: "/point_card" },
@@ -36,6 +43,29 @@ export function HeaderApp({
   ];
 
   const { user, setUser, users, open, setOpen } = useContext(StoreVitalContext);
+  const [modalWindow, setModalWindow] = useState("select");
+  const [name, setName] = useState("");
+
+  const createUser = () => {
+    let options = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "ngrok-skip-browser-warning": "true",
+      },
+      body: JSON.stringify({ name: name }),
+    };
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/users`, options)
+      .then((res) => {
+        return res.json();
+      })
+      .then((json) => {
+        let res = json as User;
+        setUser(res);
+        setOpen(false);
+        setModalWindow("select");
+      });
+  };
 
   return (
     <>
@@ -120,31 +150,66 @@ export function HeaderApp({
         </Toolbar>
         <Modal
           open={open}
-          onClose={() => setOpen(false)}
+          onClose={() => {
+            setOpen(false);
+            setModalWindow("select");
+          }}
           aria-labelledby="modal-modal-title"
           aria-describedby="modal-modal-description"
         >
-          <Box sx={style}>
-            <Typography id="modal-modal-title" variant="h6" component="h2">
-              ユーザー選択
-            </Typography>
-            <Select
-              id="combo-box-demo"
-              value={user?.id}
-              onChange={(event) => {
-                setUser(users.find((user) => user.id == event.target.value));
-              }}
-              sx={{ width: 300 }}
-            >
-              {users.map((user) => {
-                return (
-                  <MenuItem key={user.id} value={user.id}>
-                    {user.name}
-                  </MenuItem>
-                );
-              })}
-            </Select>
-          </Box>
+          {modalWindow === "select" ? (
+            <Stack sx={style} gap={2}>
+              <Typography sx={{ fontSize: 24, fontWeight: 700 }}>
+                ユーザー選択
+              </Typography>
+              <Select
+                id="combo-box-demo"
+                value={user?.id}
+                onChange={(event) => {
+                  setUser(users.find((user) => user.id == event.target.value));
+                }}
+              >
+                {users.map((user) => {
+                  return (
+                    <MenuItem key={user.id} value={user.id}>
+                      {user.name}
+                    </MenuItem>
+                  );
+                })}
+              </Select>
+              <Button
+                variant="contained"
+                sx={{
+                  color: "white",
+                  alignSelf: "flex-end",
+                }}
+                onClick={() => setModalWindow("create")}
+              >
+                新規作成
+              </Button>
+            </Stack>
+          ) : (
+            <Stack sx={style} gap={2}>
+              <Typography sx={{ fontSize: 24, fontWeight: 700 }}>
+                ユーザー作成
+              </Typography>
+              <TextField
+                label="名前を入力"
+                value={name}
+                onChange={(v) => setName(v.target.value)}
+              />
+              <Button
+                variant="contained"
+                sx={{
+                  color: "white",
+                  alignSelf: "flex-end",
+                }}
+                onClick={() => createUser()}
+              >
+                ユーザー作成
+              </Button>
+            </Stack>
+          )}
         </Modal>
       </AppBar>
 

@@ -19,6 +19,8 @@ import { useContext, useEffect, useState } from "react";
 import { OrderItem } from "@/components/molecules/orderItem";
 import { StoreVitalContext } from "@/components/contexts/storeVital";
 import { Header } from "@/components/organisms/header";
+import { redirect, useRouter } from "next/navigation";
+import { SnackbarProvider, VariantType, useSnackbar } from "notistack";
 
 export default function Home() {
   const point_rate = 0.01;
@@ -103,12 +105,8 @@ export default function Home() {
       actionById(parseInt(result.getText()));
     },
   });
-
-  // useEffect(() => {
-  //   if (products.length > 0 && users.length > 0) {
-  //     addItem(1);
-  //   }
-  // }, [products, users]);
+  const router = useRouter();
+  const { enqueueSnackbar } = useSnackbar();
 
   const actionById = (id: number) => {
     //if msb is 4 then it is a product id
@@ -121,10 +119,22 @@ export default function Home() {
     }
   };
 
+  const notify = (message: string) => {
+    enqueueSnackbar(message, {
+      variant: "success",
+      autoHideDuration: 1000,
+      anchorOrigin: {
+        vertical: "top",
+        horizontal: "center",
+      },
+    });
+  };
+
   const setUserById = (id: number) => {
     const user = users.find((user) => user.id === id);
     if (user) {
       setUser(user);
+      notify(`${user.name}さんのカードをスキャンしました`);
     }
   };
 
@@ -147,6 +157,7 @@ export default function Home() {
         newOrder.order_items.push({ ...orderItem });
       }
       setOrder(newOrder);
+      notify(`${item.name}を追加しました`);
     }
   };
 
@@ -203,7 +214,9 @@ export default function Home() {
         console.log(res);
         order.id = res.id;
         //move to link
-        window.location.href = `/link_qr?orderId=${res.id}`;
+        //window.location.href = `/link_qr?orderId=${res.id}`;
+        //redirect(`/link_qr?orderId=${res.id}`);
+        router.push(`/link_qr?orderId=${res.id}`);
       });
     setOrder({
       id: undefined,
@@ -234,7 +247,11 @@ export default function Home() {
                     <img
                       src={product.image_url}
                       width={"100%"}
-                      style={{ aspectRatio: 1, borderRadius: 8 }}
+                      style={{
+                        aspectRatio: 1,
+                        borderRadius: 8,
+                        objectFit: "cover",
+                      }}
                     />
                     <Stack alignItems={"center"} width={"100%"} p={1}>
                       <Typography
@@ -306,7 +323,8 @@ export default function Home() {
                 {sum_quantity}点
               </Typography>
               <Typography sx={{ fontSize: 16, fontWeight: 700 }}>
-                {user?.name} お会計へ
+                {user?.name}
+                {user ? "さま" : ""} お会計へ
               </Typography>
             </Stack>
           </Stack>

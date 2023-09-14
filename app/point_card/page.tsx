@@ -62,11 +62,11 @@ export default function History() {
               width={"100%"}
               style={{
                 aspectRatio: 16 / 9,
-                objectFit: "contain",
+                objectFit: "fill",
                 boxShadow: "0px 2px 4px 0px rgba(0,0,0,0.2)",
                 borderRadius: 8,
               }}
-              src="https://prtimes.jp/i/27005/60/resize/d27005-60-fb0852c6b8ad2584ab56-4.jpg"
+              src="images/point_card.png"
             />
           </Box>
           {user ? (

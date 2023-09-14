@@ -1,25 +1,29 @@
-'use client'
+"use client";
 
-import { useState } from "react";
-import { useZxing } from "react-zxing";
+import * as React from "react";
+import Button from "@mui/material/Button";
+import { SnackbarProvider, VariantType, useSnackbar } from "notistack";
 
-export default function BarcodeScanner() {
-  const [result, setResult] = useState("");
-  
-  const { ref } = useZxing({
-    onDecodeResult(result) {
-      setResult(result.getText());
-    },
-  });
-  
+function MyApp() {}
+
+export default function IntegrationNotistack() {
+  const { enqueueSnackbar } = useSnackbar();
+
+  const handleClick = () => {
+    enqueueSnackbar("I love snacks.");
+  };
+
+  const handleClickVariant = (variant: VariantType) => () => {
+    // variant could be success, error, warning, info, or default
+    enqueueSnackbar("This is a success message!", { variant });
+  };
 
   return (
-    <>
-      <video ref={ref} />
-      <p>
-        <span>Last result:</span>
-        <span>{result}</span>
-      </p>
-    </>
+    <SnackbarProvider maxSnack={3}>
+      <Button onClick={handleClick}>Show snackbar</Button>
+      <Button onClick={handleClickVariant("success")}>
+        Show success snackbar
+      </Button>
+    </SnackbarProvider>
   );
-};
+}

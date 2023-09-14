@@ -99,9 +99,7 @@ export default function Notify() {
                     sx={{ position: "absolute", bottom: 0, width: "100%" }}
                   >
                     <Typography sx={{ fontSize: 14, color: darkGrayColor }}>
-                      {new Date(
-                        getProduct(remind.product_id)!.created_at
-                      ).toLocaleDateString()}
+                      {new Date(remind.remind_at).toLocaleDateString()}
                       に通知
                     </Typography>
                     <Typography sx={{ fontSize: 14 }}>

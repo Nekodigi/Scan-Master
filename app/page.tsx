@@ -14,6 +14,8 @@ import { useSearchParams } from "next/navigation";
 import { StoreVitalContext } from "@/components/contexts/storeVital";
 import { Header } from "@/components/organisms/header";
 import { accentColor, borderColor } from "@/style/color";
+import { HeaderEssential } from "@/components/organisms/headerEssential";
+import Link from "next/link";
 
 export default function AddPoint() {
   const [order, setOrder] = useState<Order>();
@@ -24,23 +26,7 @@ export default function AddPoint() {
 
   return (
     <Container maxWidth="xs">
-      <Stack
-        py={2}
-        width={"100%"}
-        sx={{ borderBottom: 1, borderColor: borderColor }}
-      >
-        <Typography
-          sx={{
-            fontSize: 24,
-            color: accentColor,
-            fontWeight: 700,
-            fontFamily: "Cinzel",
-            textAlign: "center",
-          }}
-        >
-          S COFFEE
-        </Typography>
-      </Stack>
+      <HeaderEssential />
       <Stack m={4} gap={8}>
         <Stack gap={2}>
           <Typography sx={{ fontSize: 24, fontWeight: 700 }}>
@@ -61,7 +47,7 @@ export default function AddPoint() {
             <br />
             商品のQRコード作成ツールも含まれています。
           </Typography>
-          <Button variant="contained" href="/pos">
+          <Button variant="contained" href="/pos" component={Link}>
             レジを開く
           </Button>
         </Stack>
@@ -74,7 +60,7 @@ export default function AddPoint() {
             <br />
             ポイントカード、購入履歴、リコメンド、お知らせが利用できます。
           </Typography>
-          <Button variant="contained" href="/point_card">
+          <Button variant="contained" href="/point_card" component={Link}>
             アプリを開く
           </Button>
         </Stack>

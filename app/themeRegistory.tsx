@@ -6,6 +6,7 @@ import { ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import { useState } from "react";
 import { lightTheme } from "@/components/themes/light";
+import { SnackbarProvider } from "notistack";
 
 // This implementation is from emotion-js
 // https://github.com/emotion-js/emotion/issues/2928#issuecomment-1319747902
@@ -55,8 +56,10 @@ export default function ThemeRegistry(props: { options: any; children: any }) {
   return (
     <CacheProvider value={cache}>
       <ThemeProvider theme={lightTheme}>
-        <CssBaseline />
-        {children}
+        <SnackbarProvider maxSnack={3}>
+          <CssBaseline />
+          {children}
+        </SnackbarProvider>
       </ThemeProvider>
     </CacheProvider>
   );

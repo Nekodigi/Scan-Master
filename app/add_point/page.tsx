@@ -10,15 +10,17 @@ import {
   Typography,
 } from "@mui/material";
 import { useContext, useEffect, useMemo, useState } from "react";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { StoreVitalContext } from "@/components/contexts/storeVital";
+import { HeaderApp } from "@/components/organisms/headerApp";
+import Link from "next/link";
 
 export default function AddPoint() {
   const [order, setOrder] = useState<Order>();
   const searchParams = useSearchParams();
   const orderId = searchParams.get("orderId");
-  const { products, users } = useContext(StoreVitalContext);
-  const [userId, setUserId] = useState<number>(0);
+  const { products, users, user, setOpen } = useContext(StoreVitalContext);
+  const router = useRouter();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -49,7 +51,7 @@ export default function AddPoint() {
       },
     };
     fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/link?order_id=${orderId}&user_id=${userId}`,
+      `${process.env.NEXT_PUBLIC_API_URL}/link?order_id=${orderId}&user_id=${user?.id}`,
       options
     )
       .then((res) => {
@@ -58,7 +60,8 @@ export default function AddPoint() {
       .then((text) => {
         console.log(text);
       });
-    window.location.href = `/notify?title=ポイントが付きました`;
+    //window.location.href = `/notify?title=ポイントが付きました`;
+    router.push(`/notify?title=ポイントが付きました`);
   };
 
   const title = useMemo(
@@ -79,6 +82,7 @@ export default function AddPoint() {
 
   return order ? (
     <Container maxWidth="xs">
+      <HeaderApp selected="/add_point" />
       <Stack m={4} gap={8}>
         {title}
 
@@ -117,24 +121,16 @@ export default function AddPoint() {
             <Typography sx={{ fontSize: 24, fontWeight: 700 }}>
               Step2 ポイントを付ける
             </Typography>
-            <Select
-              id="combo-box-demo"
-              value={userId}
-              onChange={(event) => {
-                setUserId(event.target.value as number);
-              }}
-            >
-              {users.map((user) => {
-                return (
-                  <MenuItem key={user.id} value={user.id}>
-                    {user.name}
-                  </MenuItem>
-                );
-              })}
-            </Select>
-            <Button variant="contained" onClick={() => linkUser()}>
-              ポイントを付ける
-            </Button>
+
+            {user ? (
+              <Button variant="contained" onClick={() => linkUser()}>
+                ポイントを付ける
+              </Button>
+            ) : (
+              <Button variant="contained" onClick={() => setOpen(true)}>
+                ログインしてください
+              </Button>
+            )}
           </>
         )}
       </Stack>
