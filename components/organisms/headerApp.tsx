@@ -3,6 +3,7 @@ import {
   backgroundColor,
   borderColor,
   grayColor,
+  whiteColor,
 } from "@/style/color";
 import { Person } from "@mui/icons-material";
 import {
@@ -34,8 +35,7 @@ export function HeaderApp({
     { name: "お知らせ", url: "/notification" },
   ];
 
-  const { user, setUser, users } = useContext(StoreVitalContext);
-  const [open, setOpen] = useState(false);
+  const { user, setUser, users, open, setOpen } = useContext(StoreVitalContext);
 
   return (
     <>
@@ -46,6 +46,7 @@ export function HeaderApp({
           borderBottom: 1,
           borderColor: borderColor,
           boxSizing: "border-box",
+          background: whiteColor,
         }}
         elevation={0}
       >

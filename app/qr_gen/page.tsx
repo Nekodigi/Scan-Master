@@ -48,7 +48,7 @@ export default function Home() {
   return (
     <Stack direction={"row"}>
       <Stack gap={2} width="100%" mx={2} height={"100svh"}>
-        <Header selected="/qr_gen" />
+        <Header selected="QR作成" />
         <Box></Box>
         <ToggleButtonGroup
           value={qrType}

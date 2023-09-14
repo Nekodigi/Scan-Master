@@ -5,9 +5,10 @@ import { StoreVitalContext } from "../contexts/storeVital";
 
 type OrderItemProps = {
   item: OrderItem;
+  removeItem: (id: number) => void;
 };
 
-export function OrderItem({ item }: OrderItemProps) {
+export function OrderItem({ item, removeItem }: OrderItemProps) {
   let { products, getProduct } = useContext(StoreVitalContext);
 
   return (
@@ -15,6 +16,7 @@ export function OrderItem({ item }: OrderItemProps) {
       sx={{ p: 3, borderBottom: 1, borderColor: borderColor }}
       direction={"row"}
       justifyContent={"space-between"}
+      onClick={() => removeItem(item.product_id)}
     >
       <Stack direction={"row"}>
         <Typography width={240}>{getProduct(item.product_id)?.name}</Typography>

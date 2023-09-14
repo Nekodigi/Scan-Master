@@ -25,7 +25,7 @@ import QRCode from "react-qr-code";
 export default function History() {
   const searchParams = useSearchParams();
   const title = searchParams.get("title");
-  const { products, getProduct, users, user, setUser } =
+  const { products, getProduct, users, user, setUser, setOpen } =
     useContext(StoreVitalContext);
   const [orders, setOrders] = useState<Order[]>([]);
 
@@ -69,12 +69,18 @@ export default function History() {
               src="https://prtimes.jp/i/27005/60/resize/d27005-60-fb0852c6b8ad2584ab56-4.jpg"
             />
           </Box>
-          <QRCode
-            value={`9${user?.id}`}
-            size={128}
-            style={{ alignSelf: "center" }}
-            fgColor={accentColor}
-          />
+          {user ? (
+            <QRCode
+              value={`9${user?.id}`}
+              size={128}
+              style={{ alignSelf: "center" }}
+              fgColor={accentColor}
+            />
+          ) : (
+            <Button variant="contained" onClick={() => setOpen(true)}>
+              ログインしてください
+            </Button>
+          )}
         </Stack>
       </Container>
     </Box>

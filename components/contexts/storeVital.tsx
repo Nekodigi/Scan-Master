@@ -11,6 +11,8 @@ type StoreVitalProps = {
   user: User | undefined;
   setUser: (user: User | undefined) => void;
   getUser: (id: number) => User | undefined;
+  open: boolean;
+  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 export const StoreVitalContext = createContext<StoreVitalProps>(
@@ -27,6 +29,7 @@ export const StoreVitalProvider = ({
   const [user, setUser_] = useState<User>();
   //check if first time
   const firstTime = useRef(true);
+  const [open, setOpen] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -70,6 +73,7 @@ export const StoreVitalProvider = ({
             name: "エスプレッソ",
             price: 560,
             image_url: "https://picsum.photos/200",
+            is_ec: false,
             created_at: new Date().toString(),
             updated_at: new Date().toString(),
           },
@@ -78,6 +82,7 @@ export const StoreVitalProvider = ({
             name: "抹茶ラテ",
             price: 670,
             image_url: "https://picsum.photos/200",
+            is_ec: false,
             created_at: new Date().toString(),
             updated_at: new Date().toString(),
           },
@@ -86,6 +91,7 @@ export const StoreVitalProvider = ({
             name: "カフェラテ",
             price: 580,
             image_url: "https://picsum.photos/200",
+            is_ec: false,
             created_at: new Date().toString(),
             updated_at: new Date().toString(),
           },
@@ -94,6 +100,7 @@ export const StoreVitalProvider = ({
             name: "カプチーノ",
             price: 580,
             image_url: "https://picsum.photos/200",
+            is_ec: false,
             created_at: new Date().toString(),
             updated_at: new Date().toString(),
           },
@@ -102,6 +109,7 @@ export const StoreVitalProvider = ({
             name: "アイスコーヒー",
             price: 500,
             image_url: "https://picsum.photos/200",
+            is_ec: false,
             created_at: new Date().toString(),
             updated_at: new Date().toString(),
           },
@@ -110,6 +118,7 @@ export const StoreVitalProvider = ({
             name: "インスタントコーヒー",
             price: 500,
             image_url: "https://picsum.photos/200",
+            is_ec: true,
             created_at: new Date().toString(),
             updated_at: new Date().toString(),
           },
@@ -118,6 +127,7 @@ export const StoreVitalProvider = ({
             name: "インド産コーヒー豆",
             price: 500,
             image_url: "https://picsum.photos/200",
+            is_ec: true,
             created_at: new Date().toString(),
             updated_at: new Date().toString(),
           },
@@ -173,6 +183,8 @@ export const StoreVitalProvider = ({
         user,
         setUser,
         getUser,
+        open,
+        setOpen,
       }}
     >
       {products.length > 0 ? children : <p>Loading... </p>}

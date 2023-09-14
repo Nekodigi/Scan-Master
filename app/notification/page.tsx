@@ -5,6 +5,7 @@ import {
   Box,
   Button,
   Container,
+  IconButton,
   MenuItem,
   Select,
   Stack,
@@ -16,16 +17,40 @@ import { StoreVitalContext } from "@/components/contexts/storeVital";
 import {
   accentColor,
   borderColor,
+  darkGrayColor,
   grayColor,
   primaryColor,
 } from "@/style/color";
 import { HeaderApp } from "@/components/organisms/headerApp";
+import { ThumbDown, ThumbUp } from "@mui/icons-material";
 
 export default function Notify() {
   const searchParams = useSearchParams();
   const title = searchParams.get("title");
-  const { products, users } = useContext(StoreVitalContext);
+  const { products, getProduct, users, user } = useContext(StoreVitalContext);
   const [userId, setUserId] = useState<number>(0);
+  const [reminds, setReminds] = useState<Remind[]>([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      let options = {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          "ngrok-skip-browser-warning": "true",
+        },
+      };
+      fetch(`${process.env.NEXT_PUBLIC_API_URL}/reminds/${user?.id}`, options)
+        .then((res) => {
+          return res.json();
+        })
+        .then((json) => {
+          console.log(json as Remind[]);
+          setReminds(json as Remind[]);
+        });
+    };
+    if (user) fetchData();
+  }, [user]);
 
   return (
     <Box>
@@ -33,42 +58,91 @@ export default function Notify() {
 
       <Container maxWidth="xs">
         <Stack mt={0}>
-          <Stack direction={"row"} m={3} gap={1.5}>
-            <img
-              width={128}
-              height={128}
-              style={{ objectFit: "cover" }}
-              src="https://post.medicalnewstoday.com/wp-content/uploads/sites/3/2020/02/323594_2200-1200x628.jpg"
-            />
-            <Stack justifyContent={"space-between"} width={"100%"}>
-              <Typography sx={{ fontSize: 18, fontWeight: 700 }}>
-                マグカップ店舗のみ
-              </Typography>
-              <Stack>
-                <Stack direction={"row"} justifyContent={"space-between"}>
-                  <Typography sx={{ fontSize: 16, color: grayColor }}>
-                    2023/8/2
+          {reminds.map((remind) => (
+            <Stack
+              key={`${remind.user_id},${remind.product_id}`}
+              sx={{
+                borderBottom: 1,
+                borderColor: borderColor,
+              }}
+              p={3}
+              gap={2}
+            >
+              <Stack
+                direction={"row"}
+                gap={1.5}
+                sx={{ alignItems: "center" }}
+                width={"100%"}
+              >
+                <Box
+                  display={"flex"}
+                  width={"100%"}
+                  alignSelf={"stretch"}
+                  position={"relative"}
+                  justifyContent={"center"}
+                  alignItems={"center"}
+                >
+                  <Typography
+                    sx={{
+                      fontSize: 12,
+                      fontWeight: 700,
+                      textAlign: "center",
+                    }}
+                  >
+                    {getProduct(remind.product_id)?.name}は
+                    <br />
+                    気に入っていただけましたか？
                   </Typography>
-                  <Typography sx={{ fontSize: 16 }}>￥200</Typography>
-                </Stack>
-                <Typography sx={{ fontSize: 16 }}>1個</Typography>
+                  <Stack
+                    direction={"row"}
+                    justifyContent={"space-between"}
+                    sx={{ position: "absolute", bottom: 0, width: "100%" }}
+                  >
+                    <Typography sx={{ fontSize: 14, color: darkGrayColor }}>
+                      {new Date(
+                        getProduct(remind.product_id)!.created_at
+                      ).toLocaleDateString()}
+                      に通知
+                    </Typography>
+                    <Typography sx={{ fontSize: 14 }}>
+                      ￥{getProduct(remind.product_id)?.price}
+                    </Typography>
+                  </Stack>
+                </Box>
+                <img
+                  width={128}
+                  height={128}
+                  style={{ objectFit: "cover", borderRadius: 4 }}
+                  src={getProduct(remind.product_id)?.image_url}
+                />
+              </Stack>
+              <Stack
+                direction={"row"}
+                justifyContent={"space-between"}
+                alignContent={"center"}
+                px={3}
+              >
+                <IconButton size="small">
+                  <ThumbUp fontSize="inherit" />
+                </IconButton>
+                <IconButton size="small">
+                  <ThumbDown fontSize="inherit" />
+                </IconButton>
                 <Button
                   variant="contained"
                   sx={{
                     color: "white",
                     fontWeight: 700,
                     fontSize: 16,
-                    mt: 1,
                     p: 0,
                     width: 80,
-                    alignSelf: "flex-end",
                   }}
                 >
-                  購入
+                  再購入
                 </Button>
               </Stack>
             </Stack>
-          </Stack>
+          ))}
         </Stack>
       </Container>
     </Box>
