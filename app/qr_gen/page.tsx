@@ -18,6 +18,7 @@ import {
   Typography,
 } from "@mui/material";
 import {
+  accentColor,
   backgroundColor,
   borderColor,
   grayColor,
@@ -76,7 +77,12 @@ export default function Home() {
           }}
           label="IDを入力"
         />
-        <QRCode value={result} size={256} style={{ alignSelf: "center" }} />
+        <QRCode
+          value={result}
+          size={256}
+          style={{ alignSelf: "center" }}
+          fgColor={accentColor}
+        />
       </Stack>
     </Stack>
   );
