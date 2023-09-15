@@ -249,8 +249,8 @@ export default function Home() {
                       width={"100%"}
                       style={{
                         aspectRatio: 1,
-                        borderRadius: 8,
                         objectFit: "cover",
+                        borderRadius: 8,
                       }}
                     />
                     <Stack alignItems={"center"} width={"100%"} p={1}>

@@ -109,8 +109,11 @@ export default function Notify() {
                 </Box>
                 <img
                   width={128}
-                  height={128}
-                  style={{ objectFit: "cover", borderRadius: 4 }}
+                  style={{
+                    aspectRatio: 1,
+                    objectFit: "cover",
+                    borderRadius: 4,
+                  }}
                   src={getProduct(remind.product_id)?.image_url}
                 />
               </Stack>

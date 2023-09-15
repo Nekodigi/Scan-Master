@@ -39,7 +39,10 @@ export default function Notify() {
           "ngrok-skip-browser-warning": "true",
         },
       };
-      fetch(`${process.env.NEXT_PUBLIC_API_URL}/recommends/${user?.id}`, options)
+      fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/recommends/${user?.id}`,
+        options
+      )
         .then((res) => {
           return res.json();
         })
@@ -70,7 +73,11 @@ export default function Notify() {
               >
                 <img
                   width={"100%"}
-                  style={{ objectFit: "cover", aspectRatio: 1 }}
+                  style={{
+                    objectFit: "cover",
+                    aspectRatio: 1,
+                    borderRadius: 4,
+                  }}
                   src={recProduct.image_url}
                 />
 
