@@ -61,6 +61,10 @@ export const StoreVitalProvider = ({
             if (user_) {
               setUser(user_);
             }
+          } else {
+            //set default user
+            let user_ = users_.find((user) => user.id === 9);
+            setUser(user_);
           }
         });
     };

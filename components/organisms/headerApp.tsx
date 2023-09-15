@@ -10,6 +10,7 @@ import {
   AppBar,
   Box,
   Button,
+  ButtonBase,
   Container,
   IconButton,
   MenuItem,
@@ -177,16 +178,20 @@ export function HeaderApp({
                   );
                 })}
               </Select>
-              <Button
-                variant="contained"
-                sx={{
-                  color: "white",
-                  alignSelf: "flex-end",
-                }}
-                onClick={() => setModalWindow("create")}
-              >
-                新規作成
-              </Button>
+              <Stack direction={"row"} justifyContent={"space-between"}>
+                <Button onClick={() => setModalWindow("create")}>
+                  新規作成
+                </Button>
+                <Button
+                  variant="contained"
+                  sx={{
+                    color: "white",
+                  }}
+                  onClick={() => setOpen(false)}
+                >
+                  閉じる
+                </Button>
+              </Stack>
             </Stack>
           ) : (
             <Stack sx={style} gap={2}>
